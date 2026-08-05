@@ -1,0 +1,81 @@
+{
+  "name": "format-php",
+  "displayName": "php格式化",
+  "description": "PHP代码格式化、PHP代码美化、phpfmt增强版、PHP formatting",
+  "version": "1.2.0",
+  "publisher": "ZJQ",
+  "icon": "icon.png",
+  "repository": {
+		"type": "git",
+		"url": "https://github.com/cnzjq/phpfmt.git"
+	},
+  "engines": {
+    "vscode": "^1.70.0"
+  },
+  "categories": [
+    "Formatters",
+    "Linters",
+		"Other"
+  ],
+  "keywords": [
+    "php",
+    "format",
+    "formatter",
+    "phpfmt"
+  ],
+  "activationEvents": [
+    "onLanguage:php"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "configuration": {
+      "title": "PHP 代码格式化",
+      "properties": {
+        "phpfmt.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "是否启用 PHP 格式化功能",
+          "scope": "resource"
+        },
+        "phpfmt.phpPath": {
+          "type": "string",
+          "default": "php",
+          "description": "PHP 可执行文件的路径",
+          "scope": "resource"
+        },
+        "phpfmt.indentSize": {
+          "type": "number",
+          "default": 4,
+          "minimum": 1,
+          "maximum": 8,
+          "description": "缩进空格数",
+          "scope": "resource"
+        },
+        "phpfmt.alignAssignments": {
+          "type": "boolean",
+          "default": false,
+          "description": "是否对齐等号（=）",
+          "scope": "resource"
+        },
+        "phpfmt.alignComments": {
+          "type": "boolean",
+          "default": false,
+          "description": "是否对齐注释（//）",
+          "scope": "resource"
+        }
+      }
+    },
+    "languages": [
+      {
+        "id": "php",
+        "aliases": [
+          "PHP",
+          "php"
+        ],
+        "extensions": [
+          ".php"
+        ]
+      }
+    ]
+  }
+}
