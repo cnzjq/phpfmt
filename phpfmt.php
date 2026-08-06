@@ -1,17 +1,17 @@
 <?php
 /**
- * PHP Formatter - Next Generation
- * A modern, single-file PHP code formatter with improved architecture.
+ * PHP代码格式化
+ * 支持命令行运行
+ * 需要PHP版本>5.6
  *
- * Compatible with VSCode phpfmt extension.
- * PHP 7.4+ required.
+ * @author 张俊强
+ * @version 1.2.0
  *
- * @version 2.0.0
  */
 
 namespace {
-    if (version_compare(PHP_VERSION, '7.4.0', '<')) {
-        fwrite(STDERR, "PHP 7.4+ is required\n");
+    if (version_compare(PHP_VERSION, '5.6.0', '<')) {
+        fwrite(STDERR, "PHP 5.6+ is required\n");
         exit(255);
     }
 }
@@ -133,6 +133,49 @@ namespace PhpFmt {
 
         public function format(string $source): string {
             return preg_replace('/\n{3,}/', "\n\n", $source);
+        }
+    }
+
+    // =====================================================================
+    // Pass: Normalize PHP short tags to full tags
+    // =====================================================================
+    final class ShortTagNormalizer extends FormatterPass {
+        public function candidate(string $source): bool {
+            return preg_match('/<\?(?!php)/', $source) === 1;
+        }
+
+        public function format(string $source): string {
+            $tokens = token_get_all($source);
+            $result = [];
+
+            foreach ($tokens as $token) {
+                if (is_array($token)) {
+                    $tokenType = $token[0];
+                    $tokenText = $token[1];
+
+                    if ($tokenType === T_OPEN_TAG) {
+                        // Replace short open tag <? with <?php
+                        if (strpos($tokenText, '<?php') !== 0) {
+                            $tokenText = preg_replace('/^<\?/', '<?php', $tokenText);
+                            // Ensure space after <?php
+                            if (!preg_match('/^<\?php\s/', $tokenText)) {
+                                $tokenText = preg_replace('/^<\?php/', '<?php ', $tokenText);
+                            }
+                        }
+                        $result[] = $tokenText;
+                    } elseif ($tokenType === T_OPEN_TAG_WITH_ECHO) {
+                        // Replace <?= with <?php echo
+                        $tokenText = preg_replace('/^<\?=\s*/', '<?php echo ', $tokenText);
+                        $result[] = $tokenText;
+                    } else {
+                        $result[] = $tokenText;
+                    }
+                } else {
+                    $result[] = $token;
+                }
+            }
+
+            return implode('', $result);
         }
     }
 
@@ -1022,6 +1065,7 @@ namespace PhpFmt {
             $this->passes = [
                 new NormalizeWhitespace(),
                 new TrimExtraLines(),
+                new ShortTagNormalizer(),
                 new SpaceNormalizer(),
                 new FunctionSpacing(),
                 new SmartIndent($this->indentSize),
@@ -1056,7 +1100,7 @@ namespace PhpFmt {
             }
             // Ensure file ends with a single newline
             $source = rtrim($source, "\r\n");
-            return $source . "\n";
+            return $source . "\n\n";
         }
     }
 }

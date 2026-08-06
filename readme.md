@@ -1,19 +1,19 @@
-# php格式化 (phpfmt)
+# php格式化 (增强版)
 
-基于 phpfmt.php 的 VS Code PHP 代码格式化插件。
+PHP代码格式化增强版，自适配PHP版本。
 
 ## 功能特点
 
-- **一键格式化**：支持对整个 PHP 文件或选中代码片段进行格式化
-- **智能缩进**：基于 Token 分析的自动缩进，支持大括号风格切换
-- **等号对齐**：可选的对齐连续赋值语句中等号位置
-- **注释对齐**：可选的对齐连续行末尾的 `//` 注释
+- **一键格式化**：支持对整个 PHP 文件或选中代码格式化
+- **保存格式化**：保存 PHP 文件时自动格式化
+- **智能缩进**：基于 Token 分析的自动缩进
+- **等号对齐**：对齐连续赋值语句中等号位置
+- **注释对齐**：对齐连续行末尾的 `//` 注释
 - **中文界面**：所有配置项、提示信息均为中文
 
 ## 安装要求
 
-- VS Code >= 1.70.0
-- 系统中已安装 PHP（命令行中可执行 `php`）
+- 系统中已安装 PHP（命令行中可执行 `php`，增加环境变量指向PHP目录即可）
 
 ## 使用方法
 
@@ -31,14 +31,6 @@
 - `Ctrl + K Ctrl + F`（Windows/Linux）
 - `Cmd + K Cmd + F`（macOS）
 
-### 保存时自动格式化
-
-在 VS Code 设置中开启：
-
-```json
-"editor.formatOnSave": true
-```
-
 ## 配置项
 
 在 VS Code 设置中搜索 `phpfmt`，可调整以下配置：
@@ -50,7 +42,7 @@
 | `phpfmt.indentSize` | `number` | `4` | 缩进空格数（1~8） |
 | `phpfmt.alignAssignments` | `boolean` | `false` | 是否对齐等号（`=`） |
 | `phpfmt.alignComments` | `boolean` | `false` | 是否对齐注释（`//`） |
-
+| `phpfmt.formatOnSave` | `boolean` | `true` | 是否保存时自动格式化 |
 ### 配置示例
 
 在 `.vscode/settings.json` 中添加：

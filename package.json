@@ -1,9 +1,9 @@
 {
   "name": "format-php",
-  "displayName": "php格式化",
+  "displayName": "php格式化 - 增强版",
   "description": "PHP代码格式化、PHP代码美化、phpfmt增强版、PHP formatting",
-  "version": "1.2.0",
-  "publisher": "ZJQ",
+  "version": "1.2.2",
+  "publisher": "zjq",
   "icon": "icon.png",
   "repository": {
 		"type": "git",
@@ -61,6 +61,12 @@
           "type": "boolean",
           "default": false,
           "description": "是否对齐注释（//）",
+          "scope": "resource"
+        },
+        "phpfmt.formatOnSave": {
+          "type": "boolean",
+          "default": false,
+          "description": "保存时自动格式化",
           "scope": "resource"
         }
       }

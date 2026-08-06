@@ -176,7 +176,16 @@ function activate(context) {
         vscode.window.showInformationMessage('PHP 格式化完成。');
     });
 
-    context.subscriptions.push(formatter, rangeFormatter, disposable);
+    const saveListener = vscode.workspace.onWillSaveTextDocument((event) => {
+        if (event.document.languageId === 'php') {
+            const config = getConfig();
+            if (config.get('formatOnSave', false)) {
+                event.waitUntil(formatDocument(event.document, null));
+            }
+        }
+    });
+
+    context.subscriptions.push(formatter, rangeFormatter, disposable, saveListener);
 }
 
 function deactivate() {
