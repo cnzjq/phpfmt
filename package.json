@@ -1,87 +1,73 @@
 {
-  "name": "format-php",
-  "displayName": "php格式化 - 增强版",
-  "description": "PHP代码格式化、PHP代码美化、phpfmt增强版、PHP formatting",
-  "version": "1.2.2",
-  "publisher": "zjq",
-  "icon": "icon.png",
-  "repository": {
-		"type": "git",
-		"url": "https://github.com/cnzjq/phpfmt.git"
-	},
-  "engines": {
-    "vscode": "^1.70.0"
-  },
-  "categories": [
-    "Formatters",
-    "Linters",
-		"Other"
-  ],
-  "keywords": [
-    "php",
-    "format",
-    "formatter",
-    "phpfmt"
-  ],
-  "activationEvents": [
-    "onLanguage:php"
-  ],
-  "main": "./extension.js",
-  "contributes": {
-    "configuration": {
-      "title": "PHP 代码格式化",
-      "properties": {
-        "phpfmt.enabled": {
-          "type": "boolean",
-          "default": true,
-          "description": "是否启用 PHP 格式化功能",
-          "scope": "resource"
-        },
-        "phpfmt.phpPath": {
-          "type": "string",
-          "default": "php",
-          "description": "PHP 可执行文件的路径",
-          "scope": "resource"
-        },
-        "phpfmt.indentSize": {
-          "type": "number",
-          "default": 4,
-          "minimum": 1,
-          "maximum": 8,
-          "description": "缩进空格数",
-          "scope": "resource"
-        },
-        "phpfmt.alignAssignments": {
-          "type": "boolean",
-          "default": false,
-          "description": "是否对齐等号（=）",
-          "scope": "resource"
-        },
-        "phpfmt.alignComments": {
-          "type": "boolean",
-          "default": false,
-          "description": "是否对齐注释（//）",
-          "scope": "resource"
-        },
-        "phpfmt.formatOnSave": {
-          "type": "boolean",
-          "default": false,
-          "description": "保存时自动格式化",
-          "scope": "resource"
-        }
-      }
+    "name": "format-php",
+    "displayName": "php格式化 - 中文版",
+    "description": "PHP代码格式化、格式化PHP代码、PHP代码美化、format php、phpfmt、fmtphp、php formatter、php formatting",
+    "version": "1.3.0",
+    "publisher": "zjq",
+    "icon": "icon.png",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/cnzjq/phpfmt.git"
     },
-    "languages": [
-      {
-        "id": "php",
-        "aliases": [
-          "PHP",
-          "php"
-        ],
-        "extensions": [
-          ".php"
+    "engines": {
+        "vscode": "^1.74.0"
+    },
+    "categories": [
+        "Formatters",
+        "Linters",
+        "Other"
+    ],
+    "keywords": [
+        "php",
+        "formatter",
+        "format",
+        "phpfmt",
+        "fmtphp",
+        "format php",
+        "php format"
+    ],
+    "main": "./extension.js",
+    "activationEvents": [
+        "onLanguage:php"
+    ],
+    "contributes": {
+        "configuration": {
+            "title": "PHP格式化",
+            "properties": {
+                "fmt.phpPath": {
+                    "type": "string",
+                    "default": "php",
+                    "description": "可执行 PHP 文件路径（php 可执行文件）。默认 \"php\" 表示从系统 PATH 中查找；也可填写完整路径，例如 Windows：C:\\php\\php.exe，macOS/Linux：/usr/bin/php。"
+                },
+                "fmt.maxLineLength": {
+                    "type": "integer",
+                    "default": 0,
+                    "minimum": 0,
+                    "description": "每行最大长度。超过时智能拆分参数列表、数组等；0 表示不限制（默认值 0）。"
+                },
+                "fmt.alignEquals": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "是否对齐连续赋值语句（=）。"
+                },
+                "fmt.alignComments": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "是否对齐连续行内注释（//）。"
+                },
+                "fmt.formatOnSave": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "保存 PHP 文件时是否自动格式化。注意：与本插件的保存自动格式化同时使用时，请关闭 VS Code 自带的 \"editor.formatOnSave\"，避免重复格式化。"
+                }
+            }
+        },
+        "commands": [
+            {
+                "command": "fmt.format",
+                "title": "PHP格式化: 格式化当前文件"
+            }
         ]
-      }
-    ]
-  }
+    }
 }
